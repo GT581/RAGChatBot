@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Starting RAG Chatbot services..."
+
+# Start all services with existing data
+docker-compose up -d

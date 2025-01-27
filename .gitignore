@@ -1,0 +1,11 @@
+rebuild
+npmupdate
+.env
+frontend/node_modules/
+TODO.txt
+project_structure
+.pytest_cache/
+backend/app/api/debug.py
+frontend/src/components/__tests__/
+frontend/coverage/
+.DS_Store

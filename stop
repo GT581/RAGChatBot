@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Stopping RAG Chatbot services..."
+
+# Stop services but preserve data
+docker-compose down
