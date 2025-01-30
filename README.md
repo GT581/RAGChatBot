@@ -80,7 +80,7 @@ ragchatbot/
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/ragchatbot.git
+git clone https://github.com/GT581/RAGChatBot.git
 cd ragchatbot
 ```
 
@@ -146,6 +146,10 @@ REACT_APP_API_BASE_URL=http://localhost:8000/api/v1
 
 ## Configuration
 Application settings are defined in the `backend/app/core/settings.py` file. These settings are used to configure the application's behavior and performance, specifically related to the Gemini API and document processing.
+
+### Models
+- Gemini Model: Gemini 1.0 Pro
+- Embedding Model: Text Embedding 004
 
 ### Rate Limits
 The application is configured to work within Gemini API's free tier limits:
