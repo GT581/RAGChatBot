@@ -5,7 +5,7 @@ from app.core.settings import settings
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    version=getattr(settings, 'VERSION', '1.0.0'),  # Default to 1.0.0 if not set
+    version=getattr(settings, 'VERSION'),
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
