@@ -9,7 +9,7 @@ VERSION = "0.1.0"
 BACKEND_CORS_ORIGINS = ["http://localhost:3000", "http://localhost:8000"]
 
 # Model defaults
-GEMINI_MODEL = "gemini-pro"
+GEMINI_MODEL = "gemini-1.5-flash"
 EMBEDDING_MODEL = "models/text-embedding-004"
 EMBEDDING_DIMENSIONS = 768
 
