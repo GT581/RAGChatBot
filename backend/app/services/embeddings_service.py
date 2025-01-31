@@ -44,19 +44,6 @@ class GeminiEmbeddings:
         return embeddings
 
     async def aembed_query(self, text: str) -> List[float]:
-        """Generate embedding for a single query text"""
-        try:
-            result = genai.embed_content(
-                model=self.model,
-                content=text,
-                task_type="retrieval_query"
-            )
-            return result['embedding']
-        except Exception as e:
-            print(f"Error generating embeddings: {str(e)}")
-            raise
-
-    async def aembed_query(self, text: str) -> List[float]:
         """Asynchronously get embeddings for a query"""
         try:
             result = genai.embed_content(
