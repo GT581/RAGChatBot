@@ -119,6 +119,7 @@ REACT_APP_API_BASE_URL=http://localhost:8000/api/v1
 
       - **Frontend**: Open [http://localhost:3000](http://localhost:3000) in your browser to interact with the UI.
       - **Backend API**: The FastAPI backend will be available at [http://localhost:8000](http://localhost:8000).
+      - **API Documentation**: Interactive API docs are available at [http://localhost:8000/docs](http://localhost:8000/docs) where you can review details on all endpoints.
 
    3. Stopping the containers
 
@@ -148,7 +149,7 @@ REACT_APP_API_BASE_URL=http://localhost:8000/api/v1
 Application settings are defined in the `backend/app/core/settings.py` file. These settings are used to configure the application's behavior and performance, specifically related to the Gemini API and document processing.
 
 ### Models
-- Gemini Model: Gemini 1.0 Pro
+- Gemini Model: Gemini 1.5 Flash
 - Embedding Model: Text Embedding 004
 
 ### Rate Limits

@@ -3,7 +3,7 @@ from .config import Settings
 # API defaults
 API_V1_STR = "/api/v1"
 PROJECT_NAME = "RAG Chatbot"
-VERSION = "0.1.0"
+VERSION = "1.0.0"
 
 # CORS defaults
 BACKEND_CORS_ORIGINS = ["http://localhost:3000", "http://localhost:8000"]
