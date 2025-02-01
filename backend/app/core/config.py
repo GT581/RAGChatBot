@@ -51,6 +51,7 @@ class Settings(BaseSettings):
     MAX_RPM: int
     MAX_TPM: int
     MAX_CHUNK_TOKENS: int
+    EMBEDDING_MAX_RPM: int
     
     # Document processing settings
     CHUNK_SIZE: int
