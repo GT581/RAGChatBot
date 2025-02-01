@@ -18,7 +18,7 @@ MAX_RPM = 12  # Buffer below 15 RPM limit for GEMINI calls
 MAX_TPM = 28000  # Buffer below 32,000 TPM
 MAX_CHUNK_TOKENS = 1500  # Typical chunk token limit
 
-EMBEDDING_MAX_RPM = 1500  # ate limit for embeddings model calls
+EMBEDDING_MAX_RPM = 1500  # Rate limit for embeddings model calls
 
 # Document processing defaults
 CHUNK_SIZE = 500  # ~300 words per chunk
