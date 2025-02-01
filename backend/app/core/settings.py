@@ -14,9 +14,11 @@ EMBEDDING_MODEL = "models/text-embedding-004"
 EMBEDDING_DIMENSIONS = 768
 
 # Rate limits (based on Gemini API)
-MAX_RPM = 12  # Buffer below 15 RPM limit
+MAX_RPM = 12  # Buffer below 15 RPM limit for GEMINI calls
 MAX_TPM = 28000  # Buffer below 32,000 TPM
 MAX_CHUNK_TOKENS = 1500  # Typical chunk token limit
+
+EMBEDDING_MAX_RPM = 1500  # ate limit for embeddings model calls
 
 # Document processing defaults
 CHUNK_SIZE = 500  # ~300 words per chunk
@@ -76,5 +78,6 @@ settings = Settings(
     LOG_LEVEL=LOG_LEVEL,
     MAX_RPM=MAX_RPM,
     MAX_TPM=MAX_TPM,
-    MAX_CHUNK_TOKENS=MAX_CHUNK_TOKENS
+    MAX_CHUNK_TOKENS=MAX_CHUNK_TOKENS,
+    EMBEDDING_MAX_RPM=EMBEDDING_MAX_RPM
 ) 

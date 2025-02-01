@@ -21,7 +21,7 @@ class GeminiEmbeddings:
             # Rate limiting
             current_time = time.time()
             if current_time - self.last_request_time < 60:  # 1 minute window
-                if self.request_count >= settings.MAX_RPM:
+                if self.request_count >= settings.EMBEDDING_MAX_RPM:
                     await asyncio.sleep(60 - (current_time - self.last_request_time))
                     self.request_count = 0
                     self.last_request_time = time.time()
@@ -54,21 +54,4 @@ class GeminiEmbeddings:
             return result['embedding']
         except Exception as e:
             print(f"Error generating embeddings: {str(e)}")
-            raise
-
-    async def aembed_documents(self, texts: List[str]) -> List[List[float]]:
-        """Asynchronously get embeddings for documents"""
-        embeddings = []
-        for text in texts:
-            try:
-                result = genai.embed_content(
-                    model=self.model,
-                    content=text,
-                    task_type="retrieval_document"
-                )
-                embeddings.append(result['embedding'])
-                time.sleep(1/settings.MAX_RPM)  # Rate limiting
-            except Exception as e:
-                print(f"Error generating embeddings: {str(e)}")
-                raise
-        return embeddings 
+            raise 
