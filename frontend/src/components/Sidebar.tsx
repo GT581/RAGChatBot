@@ -33,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       >
         New Chat
       </button>
-      <div className="space-y-2">
+      <div className="space-y-2 overflow-y-auto max-h-[calc(100vh-150px)]">
         {sessions.map((session) => (
           <div
             key={session.id}
