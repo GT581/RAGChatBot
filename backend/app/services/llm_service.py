@@ -36,6 +36,7 @@ class LLMService:
                         'max_output_tokens': self.max_tokens,
                     }
                 )
+                logger.info("LLM generation successful.")
                 return response.text
                 
             except Exception as e:

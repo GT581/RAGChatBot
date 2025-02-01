@@ -24,6 +24,7 @@ class IngestService:
         )
 
     async def process_file(self, file: UploadFile, session_id: str):
+        logger.info(f"Processing file: {file.filename} for session_id: {session_id}")
         try:
             # Check if file is empty
             await file.seek(0)
@@ -49,12 +50,13 @@ class IngestService:
                 raise HTTPException(status_code=400, detail="File content is empty")
             
             file_content = self.document_service.read_file_content(content, content_type)
+            logger.debug(f"Extracted file content of length {len(file_content)} for file: {file.filename}")
             
             if not file_content:
                 logger.error(f"Could not extract content from file: {file.filename}")
                 raise HTTPException(status_code=400, detail="Could not extract content from file")
             
-            logger.info(f"Processing document - Name: {file.filename}, Size: {len(file_content)} chars")
+            logger.info(f"Processing document for session_id: {session_id} - Name: {file.filename}, Size: {len(file_content)} chars")
             document = await self.document_service.process_document(
                 session_id=session_id,
                 file_content=file_content,

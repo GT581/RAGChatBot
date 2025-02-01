@@ -49,6 +49,7 @@ class DocumentService:
 
     async def process_document(self, session_id: str, file_content: str, filename: str, file_type: str):
         """Process a document: create chunks and generate embeddings"""
+        logger.info(f"Starting to process document: {filename} for session: {session_id}")
         # Create document record
         document = Document(
             session_id=session_id,
@@ -58,9 +59,11 @@ class DocumentService:
         )
         self.db.add(document)
         self.db.commit()
+        logger.info(f"Document record created with id: {document.id}")
         
         # Split text into chunks
         chunks = self.text_splitter.split_text(file_content)
+        logger.debug(f"Document {document.id} split into {len(chunks)} chunks")
         
         # Prepare chunks for batch processing
         chunk_texts = []
@@ -76,7 +79,9 @@ class DocumentService:
             db_chunks.append(chunk)
         
         # Generate embeddings in batch
+        logger.info(f"Generating embeddings for {len(chunk_texts)} chunks in document {document.id}")
         embeddings = await self.embeddings.aembed_documents(chunk_texts)
+        logger.info(f"Generated embeddings for document {document.id}")
         
         # Store chunks with embeddings
         for chunk, embedding in zip(db_chunks, embeddings):
@@ -84,11 +89,13 @@ class DocumentService:
             self.db.add(chunk)
         
         self.db.commit()
+        logger.info(f"Document {document.id} processing complete with {len(db_chunks)} chunks stored")
         return document
 
     async def search_similar_chunks(self, query: str, session_id: str, limit: int | None = None) -> tuple[List[DocumentChunk], List[float]]:
         """Search for similar chunks using vector similarity and return chunks with their scores"""
         limit = limit or settings.SIMILARITY_TOP_K
+        logger.info(f"Searching similar chunks for session {session_id} with query: {query[:100]}{'...' if len(query) > 100 else ''}")
         query_embedding = await self.embeddings.aembed_query(query)
         
         # Use SQLAlchemy text() for raw SQL
@@ -106,6 +113,7 @@ class DocumentService:
                 "limit": limit
             }
         ).fetchall()
+        logger.debug(f"Found {len(result)} similar chunks for session {session_id}")
         
         chunk_ids = []
         scores = []
@@ -119,4 +127,6 @@ class DocumentService:
         
         # Maintain order from similarity search
         id_to_chunk = {str(chunk.id): chunk for chunk in chunks}
-        return [id_to_chunk[str(chunk_id)] for chunk_id in chunk_ids], scores 
+        sorted_chunks = [id_to_chunk[str(chunk_id)] for chunk_id in chunk_ids]
+        logger.info(f"Returning {len(sorted_chunks)} similar chunks for session {session_id}")
+        return sorted_chunks, scores 
