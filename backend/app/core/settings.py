@@ -29,7 +29,7 @@ EMBEDDING_BATCH_SIZE = 5  # 5 chunks per batch
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB to handle PDFs and spreadsheets
 
 # Chat defaults
-TEMPERATURE = 0.7
+TEMPERATURE = 0.1
 MAX_TOKENS = 1000  # Response token limit
 SYSTEM_PROMPT = """You are a helpful AI assistant. When answering questions:
 1. Use the provided context if available
