@@ -8,6 +8,9 @@ import uuid
 from datetime import datetime
 from fastapi import HTTPException
 from app.core.settings import settings
+import logging
+
+logger = logging.getLogger(__name__)
 
 class ChatService:
     def __init__(self, db: Session):
@@ -25,6 +28,7 @@ class ChatService:
         self.db.add(session)
         self.db.commit()
         self.db.refresh(session)
+        logger.info(f"Chat session created for user_id: {user_id} with session_id: {session.id}")
         return session
 
     def get_session(self, session_id: str) -> Optional[ChatSession]:
@@ -46,7 +50,9 @@ class ChatService:
         # Validate session exists
         session = self.get_session(session_id)
         if not session:
+            logger.error(f"Chat session not found: {session_id}")
             raise HTTPException(status_code=404, detail="Session not found")
+        logger.info(f"Generating response for session_id: {session_id}")
         
         messages = self.get_chat_history(session_id, limit=self.max_history)
         
@@ -58,6 +64,7 @@ class ChatService:
         )
         self.db.add(user_message)
         self.db.commit()
+        logger.info(f"User message saved for session_id: {session_id}")
         
         # Add system prompt if it's a new conversation
         if len(messages) == 0:
@@ -91,17 +98,16 @@ class ChatService:
                 f"From document '{chunk.document.filename}':\n{chunk.content}"
                 for chunk in relevant_chunks
             ])
-            print(f"Using context: {context_text}")  # Debug log
+            logger.debug(f"Using context: {context_text}")
             
             # Add context to the user's message
             formatted_messages[-1]["content"] = f"{message_content}\n\n{context_text}"
         else:
-            print("No relevant chunks found")
+            logger.debug("No relevant chunks found")
 
         # Generate response using LLM
-        response_content = await self.llm.generate_response(
-            formatted_messages,
-        )
+        response_content = await self.llm.generate_response(formatted_messages)
+        logger.info("LLM response generated.")
 
         # Save assistant message with source information
         assistant_message = ChatMessage(
@@ -122,6 +128,7 @@ class ChatService:
         )
         self.db.add(assistant_message)
         self.db.commit()
+        logger.info(f"Assistant message saved for session_id: {session_id}")
         
         return [user_message, assistant_message]
 

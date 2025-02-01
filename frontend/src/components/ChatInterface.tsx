@@ -106,7 +106,7 @@ const ChatInterface: React.FC = () => {
         <div className="mb-4">
           <FileUpload sessionId={currentSession?.id || null} />
         </div>
-        <div className="flex-1 overflow-y-auto mb-4 space-y-4">
+        <div className="flex-1 overflow-y-auto mb-4 pb-6 space-y-4">
           <MessageList messages={messages} />
         </div>
         <div className="sticky bottom-0 bg-white p-4 border-t">

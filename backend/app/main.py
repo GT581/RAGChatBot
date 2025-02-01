@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .api import chat, ingest
 from app.core.settings import settings
+from app.core.logging import setup_logging
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -21,6 +22,9 @@ app.add_middleware(
 # Include routers with API version prefix
 app.include_router(chat.router, prefix=settings.API_V1_STR, tags=["chat"])
 app.include_router(ingest.router, prefix=settings.API_V1_STR, tags=["ingest"])
+
+# Setup logging
+setup_logging()
 
 @app.get("/")
 async def root():

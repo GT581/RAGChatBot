@@ -3,20 +3,22 @@ from .config import Settings
 # API defaults
 API_V1_STR = "/api/v1"
 PROJECT_NAME = "RAG Chatbot"
-VERSION = "0.1.0"
+VERSION = "1.0.0"
 
 # CORS defaults
 BACKEND_CORS_ORIGINS = ["http://localhost:3000", "http://localhost:8000"]
 
 # Model defaults
-GEMINI_MODEL = "gemini-pro"
+GEMINI_MODEL = "gemini-1.5-flash"
 EMBEDDING_MODEL = "models/text-embedding-004"
 EMBEDDING_DIMENSIONS = 768
 
 # Rate limits (based on Gemini API)
-MAX_RPM = 12  # Buffer below 15 RPM limit
+MAX_RPM = 12  # Buffer below 15 RPM limit for GEMINI calls
 MAX_TPM = 28000  # Buffer below 32,000 TPM
 MAX_CHUNK_TOKENS = 1500  # Typical chunk token limit
+
+EMBEDDING_MAX_RPM = 1500  # Rate limit for embeddings model calls
 
 # Document processing defaults
 CHUNK_SIZE = 500  # ~300 words per chunk
@@ -27,7 +29,7 @@ EMBEDDING_BATCH_SIZE = 5  # 5 chunks per batch
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB to handle PDFs and spreadsheets
 
 # Chat defaults
-TEMPERATURE = 0.7
+TEMPERATURE = 0.1
 MAX_TOKENS = 1000  # Response token limit
 SYSTEM_PROMPT = """You are a helpful AI assistant. When answering questions:
 1. Use the provided context if available
@@ -76,5 +78,6 @@ settings = Settings(
     LOG_LEVEL=LOG_LEVEL,
     MAX_RPM=MAX_RPM,
     MAX_TPM=MAX_TPM,
-    MAX_CHUNK_TOKENS=MAX_CHUNK_TOKENS
+    MAX_CHUNK_TOKENS=MAX_CHUNK_TOKENS,
+    EMBEDDING_MAX_RPM=EMBEDDING_MAX_RPM
 ) 

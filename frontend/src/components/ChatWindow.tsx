@@ -26,12 +26,14 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
   return (
     <div className="flex-1 flex flex-col h-screen">
-      <div className="flex-1 overflow-y-auto scrollbar-thin p-4">
-        <MessageList messages={messages} />
-        <div ref={messagesEndRef} />
-      </div>
-      <div className="p-4 border-t border-primary-dark">
-        <MessageInput onSendMessage={onSendMessage} disabled={loading} />
+      <div className="flex-1 relative">
+        <div className="overflow-y-auto scrollbar-thin p-4 pb-20 h-full">
+          <MessageList messages={messages} />
+          <div ref={messagesEndRef} />
+        </div>
+        <div className="sticky bottom-0 bg-white p-4 border-t border-primary-dark z-10">
+          <MessageInput onSendMessage={onSendMessage} disabled={loading} />
+        </div>
       </div>
     </div>
   );

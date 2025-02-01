@@ -33,30 +33,35 @@ const Sidebar: React.FC<SidebarProps> = ({
       >
         New Chat
       </button>
-      <div className="space-y-2">
-        {sessions.map((session) => (
-          <div
-            key={session.id}
-            className={`flex justify-between items-center p-2 rounded-lg cursor-pointer ${
-              currentSession?.id === session.id
-                ? 'bg-blue-100'
-                : 'hover:bg-gray-100'
-            }`}
-          >
-            <div onClick={() => onSessionSelect(session)}>
-              {formatTitle(session)}
-            </div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onDeleteSession(session.id);
-              }}
-              className="p-1 hover:bg-gray-200 rounded"
+      <div className="space-y-2 overflow-y-auto max-h-[calc(100vh-150px)]">
+        {[...sessions]
+          .sort(
+            (a, b) =>
+              new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          )
+          .map((session) => (
+            <div
+              key={session.id}
+              className={`flex justify-between items-center p-2 rounded-lg cursor-pointer ${
+                currentSession?.id === session.id
+                  ? 'bg-blue-100'
+                  : 'hover:bg-gray-100'
+              }`}
             >
-              <TrashIcon className="h-4 w-4 text-gray-500" />
-            </button>
-          </div>
-        ))}
+              <div onClick={() => onSessionSelect(session)}>
+                {formatTitle(session)}
+              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDeleteSession(session.id);
+                }}
+                className="p-1 hover:bg-gray-200 rounded"
+              >
+                <TrashIcon className="h-4 w-4 text-gray-500" />
+              </button>
+            </div>
+          ))}
       </div>
     </div>
   );

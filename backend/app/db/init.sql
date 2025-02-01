@@ -52,18 +52,6 @@ CREATE TABLE IF NOT EXISTS document_chunks (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE app_logs (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    level TEXT NOT NULL,
-    message TEXT NOT NULL,
-    module TEXT,
-    function TEXT,
-    line_number INTEGER,
-    stack_trace TEXT,
-    additional_data JSONB
-);
-
 -- Create index on embeddings for similarity search
 CREATE INDEX ON document_chunks USING ivfflat (embedding vector_cosine_ops);
 
